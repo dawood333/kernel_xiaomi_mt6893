@@ -12,6 +12,10 @@
 struct mmu_notifier;
 struct mmu_notifier_ops;
 
+enum mmu_notifier_event {
+	MMU_NOTIFY_UNMAP,
+};
+
 /* mmu_notifier_ops flags */
 #define MMU_INVALIDATE_DOES_NOT_BLOCK	(0x01)
 
@@ -343,7 +347,7 @@ static inline void mmu_notifier_mm_destroy(struct mm_struct *mm)
 
 
 static inline void mmu_notifier_range_init(struct mmu_notifier_range *range,
-					   int event,
+					   enum mmu_notifier_event event,
 					   unsigned flags,
 					   struct vm_area_struct *vma,
 					   struct mm_struct *mm,
