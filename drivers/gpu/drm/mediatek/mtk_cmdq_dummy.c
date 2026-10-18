@@ -267,27 +267,14 @@ s32 cmdq_pkt_write(struct cmdq_pkt *pkt, struct cmdq_base *clt_base,
 	unsigned long pa = (unsigned long) addr;
 	void __iomem *va = 0;
 	struct regs_addr_record *regs_addr;
-	unsigned int i = 0;
-
-	struct mtk_drm_private *private = drm_dev->dev_private;
-	struct mtk_ddp_comp *comp;
+	/* The dummy CMDQ implementation has no drm_device reference. */
 
 	if (DISP_REG_ADDR_BASE != (pa & (~DISP_REG_ADDR_MASK))) {
 		DDPDBG("%s error pa:%x, addr:%x\n",
 			 __func__, pa, addr);
 		return -1;
 	}
-	// get va from comp
-	for (i = 0; i < DDP_COMPONENT_ID_MAX; i++) {
-		if (!private->ddp_comp[i])
-			continue;
-		comp = private->ddp_comp[i];
-		if (comp->regs_pa == (pa & (~DISP_COMP_REG_ADDR_MASK))) {
-			va = comp->regs + (pa & DISP_COMP_REG_ADDR_MASK);
-			writel(value, va);
-			return 0;
-		}
-	}
+	/* Map the physical register address directly in this dummy path. */
 
 	//remap pa to va
 	if (!hasInit) {
