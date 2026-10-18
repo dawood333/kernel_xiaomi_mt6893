@@ -24,7 +24,6 @@
 //#include "dsi_display.h"
 //#include "dsi_ctrl_hw.h"
 //#include "dsi_parser.h"
-#include "../../../../kernel/irq/internals.h"
 #include "mi_disp_feature_id.h"
 #include "mi_dsi_panel.h"
 //#include "mi_dsi_panel_count.h"
